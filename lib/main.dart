@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather/features/city/presentation/bloc/city_bloc.dart';
-import 'package:weather/features/city/presentation/pages/city_page.dart';
-import 'package:weather/injection_container.dart';
 import 'package:weather/features/weather/presentation/bloc/weather_bloc.dart';
 import 'package:weather/features/weather/presentation/pages/weather_page.dart';
+import 'package:weather/injection_container.dart';
 
 void main() {
   setupLocator();
@@ -27,8 +26,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.white54),
           useMaterial3: true,
         ),
-        // home: const WeatherPage(),
-        home: const CityPage(),
+        home: const WeatherPage(),
       ),
     );
   }

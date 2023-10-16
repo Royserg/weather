@@ -10,6 +10,11 @@ class CityBloc extends Bloc<CityEvent, CityState> {
   CityBloc(this._searchCityUseCase) : super(CitiesEmpty()) {
     on<OnCitySearch>(
       (event, emit) async {
+        if (event.query.isEmpty) {
+          emit(CitiesEmpty());
+          return;
+        }
+
         emit(CitiesLoading());
 
         final result = await _searchCityUseCase.execute(event.query);
@@ -24,6 +29,9 @@ class CityBloc extends Bloc<CityEvent, CityState> {
       },
       transformer: debounce(const Duration(milliseconds: 500)),
     );
+
+    // TODO:
+    // on<OnCitySelect>()
   }
 }
 

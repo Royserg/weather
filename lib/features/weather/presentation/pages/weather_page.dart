@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather/core/constants/constants.dart';
+import 'package:weather/features/city/presentation/components/city_search.dart';
 import 'package:weather/features/weather/presentation/bloc/weather_bloc.dart';
-import 'package:weather/features/weather/presentation/bloc/weather_event.dart';
 import 'package:weather/features/weather/presentation/bloc/weather_state.dart';
 
 class WeatherPage extends StatelessWidget {
@@ -24,17 +24,7 @@ class WeatherPage extends StatelessWidget {
         child: Column(
           children: [
             const SizedBox(height: 40),
-            TextField(
-              decoration: InputDecoration(
-                hintText: 'Enter city name',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              ),
-              onChanged: (value) {
-                context.read<WeatherBloc>().add(OnCityChanged(value));
-              },
-            ),
+            const CitySearchComponent(),
             const SizedBox(height: 48),
             BlocBuilder<WeatherBloc, WeatherState>(builder: (context, state) {
               if (state is WeatherLoading) {
