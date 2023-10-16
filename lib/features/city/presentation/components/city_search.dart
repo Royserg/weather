@@ -4,17 +4,57 @@ import 'package:weather/features/city/presentation/bloc/city_bloc.dart';
 import 'package:weather/features/city/presentation/bloc/city_event.dart';
 import 'package:weather/features/city/presentation/bloc/city_state.dart';
 
-class CitySearchComponent extends StatelessWidget {
+class CitySearchComponent extends StatefulWidget {
   const CitySearchComponent({super.key});
 
+  @override
+  State<StatefulWidget> createState() => _CitySearchComponentState();
+}
+
+class _CitySearchComponentState extends State<CitySearchComponent> {
+  final textFieldController = TextEditingController();
   final componentWidth = 350.0;
 
   @override
+  void initState() {
+    super.initState();
+
+    // Note: triggers rebuild when text field changes (suffix icon conditionally appears)
+    textFieldController.addListener(() {
+      setState(() {});
+    });
+  }
+
+  @override
+  void dispose() {
+    textFieldController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    void handleTextFieldChange(String value) {
+      context.read<CityBloc>().add(OnCitySearch(value));
+    }
+
+    void clearTextField() {
+      textFieldController.clear();
+      handleTextFieldChange('');
+    }
+
     return (Column(
       children: [
         TextField(
+          controller: textFieldController,
           decoration: InputDecoration(
+            suffixIcon: textFieldController.text.isNotEmpty
+                ? IconButton(
+                    icon: const Icon(Icons.close),
+                    onPressed: () {
+                      clearTextField();
+                    },
+                  )
+                : null,
             constraints: BoxConstraints(maxWidth: componentWidth),
             hintText: 'Enter city name',
             border: OutlineInputBorder(
@@ -25,9 +65,7 @@ class CitySearchComponent extends StatelessWidget {
               ),
             ),
           ),
-          onChanged: (value) {
-            context.read<CityBloc>().add(OnCitySearch(value));
-          },
+          onChanged: handleTextFieldChange,
         ),
         BlocBuilder<CityBloc, CityState>(
           builder: (context, state) {
@@ -50,7 +88,6 @@ class CitySearchComponent extends StatelessWidget {
                 width: componentWidth,
                 height: citiesCount * 50,
                 decoration: const BoxDecoration(
-                  // borderRadius: BorderRadius.all(Radius.circular(4)),
                   borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(8),
                     bottomRight: Radius.circular(8),
@@ -77,6 +114,11 @@ class CitySearchComponent extends StatelessWidget {
                       title: Text('${city.name}, ${city.countryCode}'),
                       onTap: () {
                         debugPrint('city :${city.name}');
+                        // Clear input field
+                        clearTextField();
+
+                        // SaveCityUseCase
+                        // context.read<CityBloc>().add(OnCitySearch(value));
                       },
                     );
                   },
