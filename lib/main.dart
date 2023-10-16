@@ -19,7 +19,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (_) => locator<WeatherBloc>()),
         BlocProvider(create: (_) => locator<CitySearchBloc>()),
         BlocProvider(create: (_) => locator<CitySaveBloc>()),
         BlocProvider(create: (_) => locator<CityListBloc>()),
