@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
-import 'package:flutter/material.dart';
 import 'package:weather/core/error/exception.dart';
 import 'package:weather/core/error/failure.dart';
 import 'package:weather/features/city/data/data_sources/remote_data_source.dart';
@@ -12,7 +11,29 @@ class CityRepositoryImpl extends CityRepository {
   final CityRemoteDataSource cityRemoteDataSource;
   CityRepositoryImpl({required this.cityRemoteDataSource});
 
-  List<CityEntity> cities = [];
+  List<CityEntity> cities = [
+    const CityEntity(
+        id: 1233,
+        name: 'Ankara',
+        latitude: 20.0,
+        longitude: 20.11,
+        country: 'TrurkeR',
+        countryCode: 'tr'),
+    const CityEntity(
+        id: 3322,
+        name: 'Copenhagen',
+        latitude: 20.0,
+        longitude: 20.11,
+        country: 'TrurkeR',
+        countryCode: 'tr'),
+    const CityEntity(
+        id: 111,
+        name: 'Oswiecim',
+        latitude: 20.0,
+        longitude: 20.11,
+        country: 'TrurkeR',
+        countryCode: 'tr'),
+  ];
 
   @override
   Future<Either<Failure, List<CityEntity>>> searchCity(String query) async {

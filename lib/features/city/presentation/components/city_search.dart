@@ -46,90 +46,119 @@ class _CitySearchComponentState extends State<CitySearchComponent> {
 
     return (Column(
       children: [
-        TextField(
-          controller: textFieldController,
-          decoration: InputDecoration(
-            suffixIcon: textFieldController.text.isNotEmpty
-                ? IconButton(
-                    icon: const Icon(Icons.close),
-                    onPressed: () {
-                      clearTextField();
-                    },
-                  )
-                : null,
-            constraints: BoxConstraints(maxWidth: componentWidth),
-            hintText: 'Enter city name',
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(4),
-              borderSide: const BorderSide(
-                color: Colors.black,
-                width: 10,
+        MenuAnchor(
+          builder: (context, controller, child) {
+            return TextField(
+              controller: textFieldController,
+              decoration: InputDecoration(
+                suffixIcon: textFieldController.text.isNotEmpty
+                    ? IconButton(
+                        icon: const Icon(Icons.close),
+                        onPressed: () {
+                          clearTextField();
+                        },
+                      )
+                    : null,
+                constraints: BoxConstraints(maxWidth: componentWidth),
+                hintText: 'Enter city name',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(4),
+                  borderSide: const BorderSide(
+                    color: Colors.black,
+                    width: 10,
+                  ),
+                ),
+              ),
+              onTap: () {
+                if (!controller.isOpen && textFieldController.text.isNotEmpty) {
+                  controller.open();
+                }
+              },
+              onChanged: (value) {
+                controller.open();
+                handleTextFieldChange(value);
+              },
+            );
+          },
+          style: MenuStyle(
+            shape: MaterialStateProperty.all(
+              const RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(8),
+                  bottomRight: Radius.circular(8),
+                ),
               ),
             ),
           ),
-          onChanged: handleTextFieldChange,
-        ),
-        BlocBuilder<CitySearchBloc, CitySearchState>(
-          builder: (context, state) {
-            if (state is CitySuggestionsLoading) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
+          menuChildren: [
+            BlocBuilder<CitySearchBloc, CitySearchState>(
+              builder: (context, state) {
+                if (state is CitySuggestionsLoading) {
+                  return Center(
+                    child: SizedBox(
+                      width: componentWidth,
+                      child: const ListTile(
+                        title: Center(child: CircularProgressIndicator()),
+                      ),
+                    ),
+                  );
+                }
 
-            if (state is CitySuggestionsLoadFailure) {
-              return Center(
-                child: Text('error: ${state.message}'),
-              );
-            }
+                if (state is CitySuggestionsLoadFailure) {
+                  return Center(
+                    child: Text('error: ${state.message}'),
+                  );
+                }
 
-            if (state is CitySuggestionsLoaded) {
-              var citiesCount = state.result.length;
+                if (state is CitySuggestionsLoaded) {
+                  var citiesCount = state.result.length;
 
-              return Container(
-                width: componentWidth,
-                height: citiesCount * 50,
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(8),
-                    bottomRight: Radius.circular(8),
-                  ),
-                  border: Border(
-                    bottom: BorderSide(width: 2),
-                    left: BorderSide(),
-                    right: BorderSide(),
-                    top: BorderSide(width: 0),
-                  ),
-                ),
-                key: const Key('city_suggestions'),
-                child: ListView.separated(
-                  itemCount: citiesCount,
-                  separatorBuilder: (context, index) => const Divider(
-                    thickness: 0.5,
-                    height: 0,
-                    indent: 10.0,
-                    endIndent: 10.0,
-                  ),
-                  itemBuilder: (context, index) {
-                    var city = state.result[index];
-                    return ListTile(
-                      title: Text('${city.name}, ${city.countryCode}'),
-                      onTap: () {
-                        // Clear input field
-                        clearTextField();
+                  return Container(
+                    width: componentWidth,
+                    height: citiesCount * 50,
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(8),
+                        bottomRight: Radius.circular(8),
+                      ),
+                      border: Border(
+                        bottom: BorderSide(width: 2),
+                        left: BorderSide(),
+                        right: BorderSide(),
+                        top: BorderSide(width: 0),
+                      ),
+                    ),
+                    key: const Key('city_suggestions'),
+                    child: ListView.separated(
+                      itemCount: citiesCount,
+                      separatorBuilder: (context, index) => const Divider(
+                        thickness: 0.5,
+                        height: 0,
+                        indent: 10.0,
+                        endIndent: 10.0,
+                      ),
+                      itemBuilder: (context, index) {
+                        var city = state.result[index];
+                        return ListTile(
+                          title: Text('${city.name}, ${city.countryCode}'),
+                          onTap: () {
+                            // Clear input field
+                            clearTextField();
 
-                        // Save city
-                        context.read<CitySaveBloc>().add(OnCitySave(city));
+                            // Save city
+                            context.read<CitySaveBloc>().add(OnCitySave(city));
+                          },
+                        );
                       },
-                    );
-                  },
-                ),
-              );
-            }
+                    ),
+                  );
+                }
 
-            return Container();
-          },
-        )
+                return Container();
+              },
+            )
+          ],
+        ),
       ],
     ));
   }
