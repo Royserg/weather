@@ -1,4 +1,6 @@
-class WeatherEntity {
+import 'package:equatable/equatable.dart';
+
+class WeatherEntity extends Equatable {
   const WeatherEntity({
     required this.cityName,
     required this.main,
@@ -16,4 +18,15 @@ class WeatherEntity {
   final double temperature;
   final int pressure;
   final int humidity;
+
+  @override
+  List<Object?> get props => [
+        cityName,
+        main,
+        description,
+        iconCode,
+        temperature,
+        pressure,
+        humidity,
+      ];
 }
