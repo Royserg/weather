@@ -3,9 +3,9 @@ import 'dart:io';
 import 'package:dartz/dartz.dart';
 import 'package:weather/core/error/exception.dart';
 import 'package:weather/core/error/failure.dart';
-import 'package:weather/data/data_sources/remote_data_source.dart';
-import 'package:weather/domain/entities/weather.dart';
-import 'package:weather/domain/repositories/weather_repository.dart';
+import 'package:weather/features/weather/data/data_sources/remote_data_source.dart';
+import 'package:weather/features/weather/domain/entities/weather.dart';
+import 'package:weather/features/weather/domain/repositories/weather_repository.dart';
 
 class WeatherRepositoryImpl extends WeatherRepository {
   final WeatherRemoteDataSource weatherRemoteDataSource;

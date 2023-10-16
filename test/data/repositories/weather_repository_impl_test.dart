@@ -5,9 +5,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:weather/core/error/exception.dart';
 import 'package:weather/core/error/failure.dart';
-import 'package:weather/data/models/weather_model.dart';
-import 'package:weather/data/repositories/weather_repository_impl.dart';
-import 'package:weather/domain/entities/weather.dart';
+import 'package:weather/features/weather/data/models/weather_model.dart';
+import 'package:weather/features/weather/data/repositories/weather_repository_impl.dart';
+import 'package:weather/features/weather/domain/entities/weather.dart';
 
 import '../../helpers/test_helper.mocks.dart';
 

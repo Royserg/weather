@@ -2,10 +2,10 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:weather/core/error/failure.dart';
-import 'package:weather/domain/entities/weather.dart';
-import 'package:weather/presentation/bloc/weather_bloc.dart';
-import 'package:weather/presentation/bloc/weather_event.dart';
-import 'package:weather/presentation/bloc/weather_state.dart';
+import 'package:weather/features/weather/domain/entities/weather.dart';
+import 'package:weather/features/weather/presentation/bloc/weather_bloc.dart';
+import 'package:weather/features/weather/presentation/bloc/weather_event.dart';
+import 'package:weather/features/weather/presentation/bloc/weather_state.dart';
 import 'package:bloc_test/bloc_test.dart';
 import '../../helpers/test_helper.mocks.dart';
 

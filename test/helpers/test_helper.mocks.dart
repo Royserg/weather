@@ -11,11 +11,14 @@ import 'package:dartz/dartz.dart' as _i2;
 import 'package:http/http.dart' as _i5;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:weather/core/error/failure.dart' as _i7;
-import 'package:weather/data/data_sources/remote_data_source.dart' as _i9;
-import 'package:weather/data/models/weather_model.dart' as _i3;
-import 'package:weather/domain/entities/weather.dart' as _i8;
-import 'package:weather/domain/repositories/weather_repository.dart' as _i4;
-import 'package:weather/domain/usecases/get_current_weather.dart' as _i10;
+import 'package:weather/features/weather/data/data_sources/remote_data_source.dart'
+    as _i9;
+import 'package:weather/features/weather/data/models/weather_model.dart' as _i3;
+import 'package:weather/features/weather/domain/entities/weather.dart' as _i8;
+import 'package:weather/features/weather/domain/repositories/weather_repository.dart'
+    as _i4;
+import 'package:weather/features/weather/domain/usecases/get_current_weather.dart'
+    as _i10;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values

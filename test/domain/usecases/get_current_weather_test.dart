@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:weather/domain/entities/weather.dart';
-import 'package:weather/domain/usecases/get_current_weather.dart';
+import 'package:weather/features/weather/domain/entities/weather.dart';
+import 'package:weather/features/weather/domain/usecases/get_current_weather.dart';
 import '../../helpers/test_helper.mocks.dart';
 
 void main() {

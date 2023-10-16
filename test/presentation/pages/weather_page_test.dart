@@ -5,11 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:weather/domain/entities/weather.dart';
-import 'package:weather/presentation/bloc/weather_bloc.dart';
-import 'package:weather/presentation/bloc/weather_event.dart';
-import 'package:weather/presentation/bloc/weather_state.dart';
-import 'package:weather/presentation/pages/weather_page.dart';
+import 'package:weather/features/weather/domain/entities/weather.dart';
+import 'package:weather/features/weather/presentation/bloc/weather_bloc.dart';
+import 'package:weather/features/weather/presentation/bloc/weather_event.dart';
+import 'package:weather/features/weather/presentation/bloc/weather_state.dart';
+import 'package:weather/features/weather/presentation/pages/weather_page.dart';
 
 class MockWeatherBloc extends MockBloc<WeatherEvent, WeatherState>
     implements WeatherBloc {}
@@ -22,7 +22,7 @@ void main() {
     HttpOverrides.global = null;
   });
 
-  Widget _makeTestableWidget(Widget body) {
+  Widget makeTestableWidget(Widget body) {
     return BlocProvider<WeatherBloc>(
       create: (context) => mockWeatherBloc,
       child: MaterialApp(home: body),
@@ -46,7 +46,7 @@ void main() {
       when(() => mockWeatherBloc.state).thenReturn(WeatherEmpty());
 
       // act
-      await widgetTester.pumpWidget(_makeTestableWidget(const WeatherPage()));
+      await widgetTester.pumpWidget(makeTestableWidget(const WeatherPage()));
       var textField = find.byType(TextField);
       expect(textField, findsOneWidget);
 
@@ -63,7 +63,7 @@ void main() {
       when(() => mockWeatherBloc.state).thenReturn(WeatherLoading());
 
       // act
-      await widgetTester.pumpWidget(_makeTestableWidget(const WeatherPage()));
+      await widgetTester.pumpWidget(makeTestableWidget(const WeatherPage()));
 
       // assert
       expect(find.byType(CircularProgressIndicator), findsOneWidget);
@@ -78,7 +78,7 @@ void main() {
           .thenReturn(const WeatherLoaded(testWeather));
 
       // act
-      await widgetTester.pumpWidget(_makeTestableWidget(const WeatherPage()));
+      await widgetTester.pumpWidget(makeTestableWidget(const WeatherPage()));
       await widgetTester.pumpAndSettle(const Duration(milliseconds: 500));
 
       // assert

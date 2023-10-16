@@ -3,8 +3,8 @@ import 'package:mockito/mockito.dart';
 import 'package:http/http.dart' as http;
 import 'package:weather/core/constants/constants.dart';
 import 'package:weather/core/error/exception.dart';
-import 'package:weather/data/data_sources/remote_data_source.dart';
-import 'package:weather/data/models/weather_model.dart';
+import 'package:weather/features/weather/data/data_sources/remote_data_source.dart';
+import 'package:weather/features/weather/data/models/weather_model.dart';
 
 import '../../helpers/json_reader.dart';
 import '../../helpers/test_helper.mocks.dart';
