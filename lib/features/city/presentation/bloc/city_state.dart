@@ -29,3 +29,12 @@ class CitiesLoadFailure extends CityState {
   @override
   List<Object?> get props => [message];
 }
+
+// -- Save
+class CitySaveLoading extends CityState {}
+
+class CitySaveSuccess extends CityState {}
+
+class CitySaveFailure extends CityState {}
+
+// TODO: -- GetList - change the previous classes to search related?

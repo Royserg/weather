@@ -117,8 +117,8 @@ class _CitySearchComponentState extends State<CitySearchComponent> {
                         // Clear input field
                         clearTextField();
 
-                        // SaveCityUseCase
-                        // context.read<CityBloc>().add(OnCitySearch(value));
+                        // Save city
+                        context.read<CityBloc>().add(OnCitySave(city));
                       },
                     );
                   },

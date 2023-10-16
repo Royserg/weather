@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:weather/features/city/domain/entities/city.dart';
 
 abstract class CityEvent extends Equatable {
   const CityEvent();
@@ -14,4 +15,13 @@ class OnCitySearch extends CityEvent {
 
   @override
   List<Object?> get props => [query];
+}
+
+class OnCitySave extends CityEvent {
+  final CityEntity city;
+
+  const OnCitySave(this.city);
+
+  @override
+  List<Object?> get props => [city];
 }
