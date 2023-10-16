@@ -3,12 +3,12 @@ import 'package:weather/core/error/failure.dart';
 import 'package:weather/features/city/domain/entities/city.dart';
 import 'package:weather/features/city/domain/repositories/city_repository.dart';
 
-class GetCitiesUseCase {
+class GetSavedCitiesUseCase {
   final CityRepository cityRepository;
 
-  const GetCitiesUseCase(this.cityRepository);
+  const GetSavedCitiesUseCase(this.cityRepository);
 
-  Either<Failure, List<CityEntity>> execute() {
-    return cityRepository.getCities();
+  Future<Either<Failure, List<CityEntity>>> execute() async {
+    return cityRepository.getSavedCities();
   }
 }

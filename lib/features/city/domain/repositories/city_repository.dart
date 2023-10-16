@@ -3,9 +3,11 @@ import 'package:weather/core/error/failure.dart';
 import 'package:weather/features/city/domain/entities/city.dart';
 
 abstract class CityRepository {
+  // API methods
   Future<Either<Failure, List<CityEntity>>> searchCity(String query);
-  // Future<Either<Failure, List<CityEntity>>> getCities();
-  // Future<Either<Failure, CityEntity>> saveCity(CityEntity city);
-  Either<Failure, List<CityEntity>> getCities();
-  Either<Failure, Unit> saveCity(CityEntity city);
+
+  // Db methods
+  Future<Either<Failure, List<CityEntity>>> getSavedCities();
+  Future<Either<Failure, void>> saveCity(CityEntity city);
+  Future<void> removeCityById(int id);
 }

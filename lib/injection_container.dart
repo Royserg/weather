@@ -1,9 +1,10 @@
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
-import 'package:weather/features/city/data/data_sources/remote_data_source.dart';
+import 'package:weather/features/city/data/data_sources/local/app_database.dart';
+import 'package:weather/features/city/data/data_sources/remote/remote_data_source.dart';
 import 'package:weather/features/city/data/repositories/city_repository_impl.dart';
 import 'package:weather/features/city/domain/repositories/city_repository.dart';
-import 'package:weather/features/city/domain/usecases/get_cities.dart';
+import 'package:weather/features/city/domain/usecases/get_saved_cities.dart';
 import 'package:weather/features/city/domain/usecases/save_city.dart';
 import 'package:weather/features/city/domain/usecases/search_city.dart';
 import 'package:weather/features/city/presentation/bloc/list/bloc.dart';
@@ -17,25 +18,32 @@ import 'package:weather/features/weather/presentation/bloc/weather_bloc.dart';
 
 final locator = GetIt.instance;
 
-void setupLocator() {
+Future<void> setupLocator() async {
+  final database =
+      await $FloorAppDatabase.databaseBuilder('app_database.db').build();
+  locator.registerSingleton<AppDatabase>(database);
+
   // bloc
-  locator.registerFactory(() => WeatherBloc(locator()));
-  locator.registerFactory(() => CitySearchBloc(locator()));
-  locator.registerFactory(() => CitySaveBloc(locator()));
-  locator.registerFactory(() => CityListBloc(locator()));
+  locator.registerFactory<WeatherBloc>(() => WeatherBloc(locator()));
+  locator.registerFactory<CitySearchBloc>(() => CitySearchBloc(locator()));
+  locator.registerFactory<CitySaveBloc>(() => CitySaveBloc(locator()));
+  locator.registerFactory<CityListBloc>(() => CityListBloc(locator()));
 
   // usecase
   locator.registerLazySingleton(() => GetCurrentWeatherUseCase(locator()));
   locator.registerLazySingleton(() => SearchCityUseCase(locator()));
   locator.registerLazySingleton(() => SaveCityUseCase(locator()));
-  locator.registerLazySingleton(() => GetCitiesUseCase(locator()));
+  locator.registerLazySingleton(() => GetSavedCitiesUseCase(locator()));
 
   // repository
   locator.registerLazySingleton<WeatherRepository>(
     () => WeatherRepositoryImpl(weatherRemoteDataSource: locator()),
   );
   locator.registerLazySingleton<CityRepository>(
-    () => CityRepositoryImpl(cityRemoteDataSource: locator()),
+    () => CityRepositoryImpl(
+      cityRemoteDataSource: locator(),
+      appDatabase: locator(),
+    ),
   );
 
   // data source

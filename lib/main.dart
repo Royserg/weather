@@ -3,12 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather/features/city/presentation/bloc/list/bloc.dart';
 import 'package:weather/features/city/presentation/bloc/save_city/bloc.dart';
 import 'package:weather/features/city/presentation/bloc/search_city/bloc.dart';
-import 'package:weather/features/weather/presentation/bloc/weather_bloc.dart';
 import 'package:weather/features/weather/presentation/pages/weather_page.dart';
 import 'package:weather/injection_container.dart';
 
-void main() {
-  setupLocator();
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await setupLocator();
   runApp(const MyApp());
 }
 

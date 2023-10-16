@@ -7,10 +7,10 @@ class CitySaveBloc extends Bloc<CitySaveEvent, CitySaveState> {
   final SaveCityUseCase _saveCityUseCase;
 
   CitySaveBloc(this._saveCityUseCase) : super(CitySaveEmpty()) {
-    on<OnCitySave>((event, emit) {
+    on<OnCitySave>((event, emit) async {
       emit(CitySaveLoading());
 
-      final result = _saveCityUseCase.execute(event.city);
+      final result = await _saveCityUseCase.execute(event.city);
       result.fold((failure) {
         emit(CitySaveFailure());
       }, (data) {

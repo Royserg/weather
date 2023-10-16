@@ -93,11 +93,16 @@ class MockWeatherRepository extends _i1.Mock implements _i4.WeatherRepository {
 
   @override
   _i6.Future<_i2.Either<_i7.Failure, _i8.WeatherEntity>> getCurrentWeather(
-          String? cityName) =>
+    double? latitude,
+    double? longitude,
+  ) =>
       (super.noSuchMethod(
         Invocation.method(
           #getCurrentWeather,
-          [cityName],
+          [
+            latitude,
+            longitude,
+          ],
         ),
         returnValue:
             _i6.Future<_i2.Either<_i7.Failure, _i8.WeatherEntity>>.value(
@@ -105,7 +110,10 @@ class MockWeatherRepository extends _i1.Mock implements _i4.WeatherRepository {
           this,
           Invocation.method(
             #getCurrentWeather,
-            [cityName],
+            [
+              latitude,
+              longitude,
+            ],
           ),
         )),
       ) as _i6.Future<_i2.Either<_i7.Failure, _i8.WeatherEntity>>);
@@ -121,17 +129,26 @@ class MockWeatherRemoteDataSource extends _i1.Mock
   }
 
   @override
-  _i6.Future<_i3.WeatherModel> getCurrentWeather(String? cityName) =>
+  _i6.Future<_i3.WeatherModel> getCurrentWeather(
+    double? latitude,
+    double? longitude,
+  ) =>
       (super.noSuchMethod(
         Invocation.method(
           #getCurrentWeather,
-          [cityName],
+          [
+            latitude,
+            longitude,
+          ],
         ),
         returnValue: _i6.Future<_i3.WeatherModel>.value(_FakeWeatherModel_1(
           this,
           Invocation.method(
             #getCurrentWeather,
-            [cityName],
+            [
+              latitude,
+              longitude,
+            ],
           ),
         )),
       ) as _i6.Future<_i3.WeatherModel>);
@@ -157,11 +174,16 @@ class MockGetCurrentWeatherUseCase extends _i1.Mock
 
   @override
   _i6.Future<_i2.Either<_i7.Failure, _i8.WeatherEntity>> execute(
-          String? cityName) =>
+    double? latitude,
+    double? longitude,
+  ) =>
       (super.noSuchMethod(
         Invocation.method(
           #execute,
-          [cityName],
+          [
+            latitude,
+            longitude,
+          ],
         ),
         returnValue:
             _i6.Future<_i2.Either<_i7.Failure, _i8.WeatherEntity>>.value(
@@ -169,7 +191,10 @@ class MockGetCurrentWeatherUseCase extends _i1.Mock
           this,
           Invocation.method(
             #execute,
-            [cityName],
+            [
+              latitude,
+              longitude,
+            ],
           ),
         )),
       ) as _i6.Future<_i2.Either<_i7.Failure, _i8.WeatherEntity>>);

@@ -8,7 +8,7 @@ class SaveCityUseCase {
 
   const SaveCityUseCase(this.cityRepository);
 
-  Either<Failure, Unit> execute(CityEntity city) {
+  Future<Either<Failure, void>> execute(CityEntity city) {
     return cityRepository.saveCity(city);
   }
 }

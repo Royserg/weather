@@ -1,5 +1,7 @@
+import 'package:floor/floor.dart';
 import 'package:weather/features/city/domain/entities/city.dart';
 
+@Entity(tableName: 'cities', primaryKeys: ['id'])
 class CityModel extends CityEntity {
   const CityModel({
     required int id,
@@ -16,6 +18,15 @@ class CityModel extends CityEntity {
           country: country,
           countryCode: countryCode,
         );
+
+  factory CityModel.fromEntity(CityEntity entity) => CityModel(
+        id: entity.id,
+        name: entity.name,
+        latitude: entity.latitude,
+        longitude: entity.longitude,
+        country: entity.country,
+        countryCode: entity.countryCode,
+      );
 
   factory CityModel.fromJson(Map<String, dynamic> json) => CityModel(
         id: json['id'],
