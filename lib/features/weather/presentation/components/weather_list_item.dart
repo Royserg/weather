@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weather/core/utils/wmo_weather_code_converter.dart';
 import 'package:weather/features/city/domain/entities/city.dart';
 import 'package:weather/features/weather/presentation/bloc/weather_bloc.dart';
 import 'package:weather/features/weather/presentation/bloc/weather_event.dart';
@@ -51,11 +52,27 @@ class WeatherListItem extends StatelessWidget {
                   }
 
                   if (state is WeatherLoaded) {
-                    final temp = state.result.current.temperature2m.toString();
-                    final unit = state.result.currentUnits.temperature2m;
-                    return Text(
-                      '$temp $unit',
-                      style: const TextStyle(fontSize: 18),
+                    final weather = state.result;
+                    final temp = weather.current.temperature2m.toString();
+                    final unit = weather.currentUnits.temperature2m;
+
+                    return Row(
+                      children: [
+                        Text(
+                          '$temp $unit',
+                          style: const TextStyle(fontSize: 18),
+                        ),
+                        const Divider(
+                          indent: 8,
+                          endIndent: 8,
+                          color: Colors.black,
+                        ),
+                        Text(
+                          WmoWeatherCodeConverter.convert(
+                              weather.current.weathercode),
+                          style: const TextStyle(fontSize: 18),
+                        ),
+                      ],
                     );
                   }
 
