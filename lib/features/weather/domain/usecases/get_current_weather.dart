@@ -8,7 +8,8 @@ class GetCurrentWeatherUseCase {
 
   const GetCurrentWeatherUseCase(this.weatherRepository);
 
-  Future<Either<Failure, WeatherEntity>> execute(String cityName) {
-    return weatherRepository.getCurrentWeather(cityName);
+  Future<Either<Failure, WeatherEntity>> execute(
+      double latitude, double longitude) {
+    return weatherRepository.getCurrentWeather(latitude, longitude);
   }
 }

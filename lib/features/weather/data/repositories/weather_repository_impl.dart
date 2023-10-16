@@ -13,9 +13,10 @@ class WeatherRepositoryImpl extends WeatherRepository {
 
   @override
   Future<Either<Failure, WeatherEntity>> getCurrentWeather(
-      String cityName) async {
+      double latitude, double longitude) async {
     try {
-      final result = await weatherRemoteDataSource.getCurrentWeather(cityName);
+      final result =
+          await weatherRemoteDataSource.getCurrentWeather(latitude, longitude);
       return Right(result.toEntity());
     } on ServerException {
       return const Left(ServerFailure('An error has occurred.'));

@@ -6,7 +6,7 @@ import 'package:weather/core/error/exception.dart';
 import 'package:weather/features/weather/data/models/weather_model.dart';
 
 abstract class WeatherRemoteDataSource {
-  Future<WeatherModel> getCurrentWeather(String cityName);
+  Future<WeatherModel> getCurrentWeather(double latitude, double longitude);
 }
 
 class WeatherRemoteDataSourceImpl extends WeatherRemoteDataSource {
@@ -14,12 +14,14 @@ class WeatherRemoteDataSourceImpl extends WeatherRemoteDataSource {
   WeatherRemoteDataSourceImpl({required this.client});
 
   @override
-  Future<WeatherModel> getCurrentWeather(String cityName) async {
+  Future<WeatherModel> getCurrentWeather(
+      double latitude, double longitude) async {
     final response =
-        await client.get(Uri.parse(Urls.currentWeatherByName(cityName)));
+        await client.get(Uri.parse(Urls.weatherByLatLong(latitude, longitude)));
 
     if (response.statusCode == 200) {
-      return WeatherModel.fromJson(json.decode(response.body));
+      final weather = WeatherModel.fromJson(json.decode(response.body));
+      return weather;
     } else {
       throw ServerException();
     }

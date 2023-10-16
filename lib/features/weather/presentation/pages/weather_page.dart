@@ -67,7 +67,7 @@ class WeatherPage extends StatelessWidget {
                       itemCount: state.result.length,
                       itemBuilder: (context, index) {
                         final city = state.result[index];
-                        return WeatherListItem(cityName: city.name);
+                        return WeatherListItem(city: city);
                       },
                     );
                   }

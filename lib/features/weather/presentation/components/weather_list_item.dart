@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weather/features/city/domain/entities/city.dart';
 import 'package:weather/features/weather/presentation/bloc/weather_bloc.dart';
 import 'package:weather/features/weather/presentation/bloc/weather_event.dart';
 
 class WeatherListItem extends StatefulWidget {
-  final String cityName;
-  const WeatherListItem({Key? key, required this.cityName}) : super(key: key);
+  final CityEntity city;
+  const WeatherListItem({Key? key, required this.city}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _WeatherListItemState();
@@ -14,8 +15,11 @@ class WeatherListItem extends StatefulWidget {
 class _WeatherListItemState extends State<WeatherListItem> {
   @override
   void initState() {
-    final cityName = widget.cityName;
-    context.read<WeatherBloc>().add(OnWeatherGet(cityName));
+    final city = widget.city;
+
+    context
+        .read<WeatherBloc>()
+        .add(OnWeatherGet(city.latitude, city.longitude));
 
     super.initState();
   }
@@ -26,21 +30,18 @@ class _WeatherListItemState extends State<WeatherListItem> {
       color: Colors.white,
       surfaceTintColor: Colors.white,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-        side: const BorderSide(width: 2),
+        borderRadius: BorderRadius.circular(8),
+        side: const BorderSide(width: 1),
       ),
       elevation: 1,
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
         child: Row(
           children: [
             Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Text(
-                  widget.cityName,
-                  style: const TextStyle(fontSize: 18),
-                ),
+              child: Text(
+                widget.city.name,
+                style: const TextStyle(fontSize: 18),
               ),
             ),
             const Row(
