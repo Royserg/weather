@@ -48,7 +48,7 @@ class CitySearchComponent extends StatelessWidget {
 
               return Container(
                 width: componentWidth,
-                height: 240,
+                height: citiesCount * 50,
                 decoration: const BoxDecoration(
                   // borderRadius: BorderRadius.all(Radius.circular(4)),
                   borderRadius: BorderRadius.only(
