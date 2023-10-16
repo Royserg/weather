@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 import 'package:weather/core/utils/wmo_weather_code_converter.dart';
 import 'package:weather/features/city/domain/entities/city.dart';
 import 'package:weather/features/weather/presentation/bloc/weather_bloc.dart';
@@ -44,7 +45,14 @@ class WeatherListItem extends StatelessWidget {
                   }
 
                   if (state is WeatherLoading) {
-                    return const CircularProgressIndicator();
+                    return const Skeletonizer(
+                      child: Row(
+                        children: [
+                          Text('temp'),
+                          Text('description'),
+                        ],
+                      ),
+                    );
                   }
 
                   if (state is WeatherLoadFailure) {
