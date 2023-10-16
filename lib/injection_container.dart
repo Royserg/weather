@@ -6,7 +6,9 @@ import 'package:weather/features/city/domain/repositories/city_repository.dart';
 import 'package:weather/features/city/domain/usecases/get_cities.dart';
 import 'package:weather/features/city/domain/usecases/save_city.dart';
 import 'package:weather/features/city/domain/usecases/search_city.dart';
-import 'package:weather/features/city/presentation/bloc/city_bloc.dart';
+import 'package:weather/features/city/presentation/bloc/list/bloc.dart';
+import 'package:weather/features/city/presentation/bloc/save_city/bloc.dart';
+import 'package:weather/features/city/presentation/bloc/search_city/bloc.dart';
 import 'package:weather/features/weather/data/data_sources/remote_data_source.dart';
 import 'package:weather/features/weather/data/repositories/weather_repository_impl.dart';
 import 'package:weather/features/weather/domain/repositories/weather_repository.dart';
@@ -18,7 +20,9 @@ final locator = GetIt.instance;
 void setupLocator() {
   // bloc
   locator.registerFactory(() => WeatherBloc(locator()));
-  locator.registerFactory(() => CityBloc(locator(), locator()));
+  locator.registerFactory(() => CitySearchBloc(locator()));
+  locator.registerFactory(() => CitySaveBloc(locator()));
+  locator.registerFactory(() => CityListBloc(locator()));
 
   // usecase
   locator.registerLazySingleton(() => GetCurrentWeatherUseCase(locator()));

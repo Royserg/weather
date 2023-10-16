@@ -1,23 +1,14 @@
 import 'package:equatable/equatable.dart';
 import 'package:weather/features/city/domain/entities/city.dart';
 
-abstract class CityEvent extends Equatable {
-  const CityEvent();
+abstract class CitySaveEvent extends Equatable {
+  const CitySaveEvent();
 
   @override
   List<Object?> get props => [];
 }
 
-class OnCitySearch extends CityEvent {
-  final String query;
-
-  const OnCitySearch(this.query);
-
-  @override
-  List<Object?> get props => [query];
-}
-
-class OnCitySave extends CityEvent {
+class OnCitySave extends CitySaveEvent {
   final CityEntity city;
 
   const OnCitySave(this.city);

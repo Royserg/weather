@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:weather/features/city/presentation/bloc/city_bloc.dart';
-import 'package:weather/features/city/presentation/bloc/city_event.dart';
-import 'package:weather/features/city/presentation/bloc/city_state.dart';
+import 'package:weather/features/city/presentation/bloc/save_city/bloc.dart';
+import 'package:weather/features/city/presentation/bloc/save_city/event.dart';
+import 'package:weather/features/city/presentation/bloc/search_city/bloc.dart';
+import 'package:weather/features/city/presentation/bloc/search_city/event.dart';
+import 'package:weather/features/city/presentation/bloc/search_city/state.dart';
 
 class CitySearchComponent extends StatefulWidget {
   const CitySearchComponent({super.key});
@@ -34,7 +36,7 @@ class _CitySearchComponentState extends State<CitySearchComponent> {
   @override
   Widget build(BuildContext context) {
     void handleTextFieldChange(String value) {
-      context.read<CityBloc>().add(OnCitySearch(value));
+      context.read<CitySearchBloc>().add(OnCitySearch(value));
     }
 
     void clearTextField() {
@@ -67,21 +69,21 @@ class _CitySearchComponentState extends State<CitySearchComponent> {
           ),
           onChanged: handleTextFieldChange,
         ),
-        BlocBuilder<CityBloc, CityState>(
+        BlocBuilder<CitySearchBloc, CitySearchState>(
           builder: (context, state) {
-            if (state is CitiesLoading) {
+            if (state is CitySuggestionsLoading) {
               return const Center(
                 child: CircularProgressIndicator(),
               );
             }
 
-            if (state is CitiesLoadFailure) {
+            if (state is CitySuggestionsLoadFailure) {
               return Center(
                 child: Text('error: ${state.message}'),
               );
             }
 
-            if (state is CitiesLoaded) {
+            if (state is CitySuggestionsLoaded) {
               var citiesCount = state.result.length;
 
               return Container(
@@ -118,7 +120,7 @@ class _CitySearchComponentState extends State<CitySearchComponent> {
                         clearTextField();
 
                         // Save city
-                        context.read<CityBloc>().add(OnCitySave(city));
+                        context.read<CitySaveBloc>().add(OnCitySave(city));
                       },
                     );
                   },
