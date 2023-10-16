@@ -35,9 +35,7 @@ class CityRepositoryImpl extends CityRepository {
 
   @override
   Either<Failure, Unit> saveCity(CityEntity city) {
-    debugPrint("ADD CITY: ${city.name}");
     cities.add(city);
-    debugPrint("ALL CITIES: ${cities.length}");
     return const Right(unit);
   }
 }

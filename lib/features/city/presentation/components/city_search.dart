@@ -115,7 +115,6 @@ class _CitySearchComponentState extends State<CitySearchComponent> {
                     return ListTile(
                       title: Text('${city.name}, ${city.countryCode}'),
                       onTap: () {
-                        debugPrint('city :${city.name}');
                         // Clear input field
                         clearTextField();
 

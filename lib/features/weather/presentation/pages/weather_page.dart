@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather/features/city/presentation/bloc/list/bloc.dart';
 import 'package:weather/features/city/presentation/bloc/list/event.dart';
 import 'package:weather/features/city/presentation/bloc/list/state.dart';
+import 'package:weather/features/city/presentation/bloc/save_city/bloc.dart';
+import 'package:weather/features/city/presentation/bloc/save_city/event.dart';
 import 'package:weather/features/city/presentation/components/city_search.dart';
 
 class WeatherPage extends StatelessWidget {
@@ -11,6 +13,11 @@ class WeatherPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     context.read<CityListBloc>().add(const OnCityListGet());
+    context.read<CitySaveBloc>().on((event, emit) {
+      if (event is OnCitySave) {
+        context.read<CityListBloc>().add(const OnCityListGet());
+      }
+    });
 
     return Scaffold(
       appBar: AppBar(
@@ -29,8 +36,6 @@ class WeatherPage extends StatelessWidget {
             const CitySearchComponent(),
             const SizedBox(height: 48),
             BlocBuilder<CityListBloc, CityListState>(builder: (context, state) {
-              debugPrint("UPDATE STATE : $state");
-
               if (state is CityListEmpty) {
                 return const Center(
                   child: Text('No cities added yet.'),
@@ -50,8 +55,6 @@ class WeatherPage extends StatelessWidget {
               }
 
               if (state is CityListLoaded) {
-                debugPrint('CITIESESS : ${state.result.length}');
-
                 return ListView.builder(
                   shrinkWrap: true,
                   itemCount: state.result.length,
