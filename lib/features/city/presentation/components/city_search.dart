@@ -18,7 +18,11 @@ class CitySearchComponent extends StatelessWidget {
             constraints: BoxConstraints(maxWidth: componentWidth),
             hintText: 'Enter city name',
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(4),
+              borderSide: const BorderSide(
+                color: Colors.black,
+                width: 10,
+              ),
             ),
           ),
           onChanged: (value) {
@@ -40,20 +44,43 @@ class CitySearchComponent extends StatelessWidget {
             }
 
             if (state is CitiesLoaded) {
-              return Column(
+              var citiesCount = state.result.length;
+
+              return Container(
+                width: componentWidth,
+                height: 240,
+                decoration: const BoxDecoration(
+                  // borderRadius: BorderRadius.all(Radius.circular(4)),
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(8),
+                    bottomRight: Radius.circular(8),
+                  ),
+                  border: Border(
+                    bottom: BorderSide(width: 2),
+                    left: BorderSide(),
+                    right: BorderSide(),
+                    top: BorderSide(width: 0),
+                  ),
+                ),
                 key: const Key('city_suggestions'),
-                children: state.result
-                    .map(
-                      (city) => InkWell(
-                        child: SizedBox(
-                            width: componentWidth,
-                            child: Text('${city.name}, ${city.countryCode}')),
-                        onTap: () {
-                          debugPrint('city :${city.name}');
-                        },
-                      ),
-                    )
-                    .toList(),
+                child: ListView.separated(
+                  itemCount: citiesCount,
+                  separatorBuilder: (context, index) => const Divider(
+                    thickness: 0.5,
+                    height: 0,
+                    indent: 10.0,
+                    endIndent: 10.0,
+                  ),
+                  itemBuilder: (context, index) {
+                    var city = state.result[index];
+                    return ListTile(
+                      title: Text('${city.name}, ${city.countryCode}'),
+                      onTap: () {
+                        debugPrint('city :${city.name}');
+                      },
+                    );
+                  },
+                ),
               );
             }
 

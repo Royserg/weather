@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Weather',
         theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.white54),
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.white60),
           useMaterial3: true,
         ),
         home: const WeatherPage(),
