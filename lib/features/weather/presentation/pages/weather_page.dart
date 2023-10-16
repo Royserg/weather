@@ -6,9 +6,12 @@ import 'package:weather/features/city/presentation/bloc/list/state.dart';
 import 'package:weather/features/city/presentation/bloc/save_city/bloc.dart';
 import 'package:weather/features/city/presentation/bloc/save_city/event.dart';
 import 'package:weather/features/city/presentation/components/city_search.dart';
+import 'package:weather/features/weather/presentation/components/weather_list_item.dart';
 
 class WeatherPage extends StatelessWidget {
   const WeatherPage({Key? key}) : super(key: key);
+
+  final cityListWidth = 420.0;
 
   @override
   Widget build(BuildContext context) {
@@ -23,181 +26,57 @@ class WeatherPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: const Color(0xff1d1e22),
         title: const Text(
-          'Weather',
+          'WeatherCheck',
           style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,
       ),
       body: Padding(
         padding: const EdgeInsets.all(24.0),
-        child: Column(
-          children: [
-            const SizedBox(height: 40),
-            const CitySearchComponent(),
-            const SizedBox(height: 48),
-            BlocBuilder<CityListBloc, CityListState>(builder: (context, state) {
-              if (state is CityListEmpty) {
-                return const Center(
-                  child: Text('No cities added yet.'),
-                );
-              }
-
-              if (state is CityListLoading) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-
-              if (state is CityListLoadFailure) {
-                return Center(
-                  child: Text(state.message),
-                );
-              }
-
-              if (state is CityListLoaded) {
-                return ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: state.result.length,
-                  itemBuilder: (context, index) {
-                    final city = state.result[index];
-                    return ListTile(
-                      title: Text(city.name),
+        child: Center(
+          child: Column(
+            children: [
+              const SizedBox(height: 40),
+              const CitySearchComponent(),
+              const SizedBox(height: 48),
+              SizedBox(
+                width: cityListWidth,
+                child: BlocBuilder<CityListBloc, CityListState>(
+                    builder: (context, state) {
+                  if (state is CityListEmpty) {
+                    return const Center(
+                      child: Text('No cities added yet.'),
                     );
-                  },
-                );
-              }
+                  }
 
-              return Container();
-            }),
-            // BlocBuilder<WeatherBloc, WeatherState>(builder: (context, state) {
-            //   if (state is WeatherLoading) {
-            //     return const Center(
-            //       child: CircularProgressIndicator(),
-            //     );
-            //   }
+                  if (state is CityListLoading) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
 
-            //   if (state is WeatherLoadFailure) {
-            //     return Center(
-            //       child: Text(state.message),
-            //     );
-            //   }
+                  if (state is CityListLoadFailure) {
+                    return Center(
+                      child: Text(state.message),
+                    );
+                  }
 
-            //   if (state is WeatherLoaded) {
-            //     return Column(
-            //       key: const Key('weather_data'),
-            //       children: [
-            //         Row(
-            //           mainAxisAlignment: MainAxisAlignment.center,
-            //           children: [
-            //             Text(
-            //               state.result.cityName,
-            //               style: const TextStyle(
-            //                 fontSize: 22.0,
-            //               ),
-            //             ),
-            //             Image(
-            //               image: NetworkImage(
-            //                 Urls.weatherIcon(
-            //                   state.result.iconCode,
-            //                 ),
-            //               ),
-            //             ),
-            //           ],
-            //         ),
-            //         const SizedBox(height: 8.0),
-            //         Text(
-            //           '${state.result.main} | ${state.result.description}',
-            //           style: const TextStyle(
-            //             fontSize: 16.0,
-            //             letterSpacing: 1.2,
-            //           ),
-            //         ),
-            //         const SizedBox(height: 24.0),
-            //         Table(
-            //           defaultColumnWidth: const FixedColumnWidth(150.0),
-            //           border: TableBorder.all(
-            //             color: Colors.grey,
-            //             style: BorderStyle.solid,
-            //             width: 1,
-            //           ),
-            //           children: [
-            //             TableRow(children: [
-            //               const Padding(
-            //                 padding: EdgeInsets.all(8.0),
-            //                 child: Text(
-            //                   'Temperature',
-            //                   style: TextStyle(
-            //                     fontSize: 16.0,
-            //                     letterSpacing: 1.2,
-            //                   ),
-            //                 ),
-            //               ),
-            //               Padding(
-            //                 padding: const EdgeInsets.all(8.0),
-            //                 child: Text(
-            //                   state.result.temperature.toString(),
-            //                   style: const TextStyle(
-            //                     fontSize: 16.0,
-            //                     letterSpacing: 1.2,
-            //                     fontWeight: FontWeight.bold,
-            //                   ),
-            //                 ),
-            //               ), // Will be change later
-            //             ]),
-            //             TableRow(children: [
-            //               const Padding(
-            //                 padding: EdgeInsets.all(8.0),
-            //                 child: Text(
-            //                   'Pressure',
-            //                   style: TextStyle(
-            //                     fontSize: 16.0,
-            //                     letterSpacing: 1.2,
-            //                   ),
-            //                 ),
-            //               ),
-            //               Padding(
-            //                 padding: const EdgeInsets.all(8.0),
-            //                 child: Text(
-            //                   state.result.pressure.toString(),
-            //                   style: const TextStyle(
-            //                       fontSize: 16.0,
-            //                       letterSpacing: 1.2,
-            //                       fontWeight: FontWeight.bold),
-            //                 ),
-            //               ), // Will be change later
-            //             ]),
-            //             TableRow(children: [
-            //               const Padding(
-            //                 padding: EdgeInsets.all(8.0),
-            //                 child: Text(
-            //                   'Humidity',
-            //                   style: TextStyle(
-            //                     fontSize: 16.0,
-            //                     letterSpacing: 1.2,
-            //                   ),
-            //                 ),
-            //               ),
-            //               Padding(
-            //                 padding: const EdgeInsets.all(8.0),
-            //                 child: Text(
-            //                   state.result.humidity.toString(),
-            //                   style: const TextStyle(
-            //                     fontSize: 16.0,
-            //                     letterSpacing: 1.2,
-            //                     fontWeight: FontWeight.bold,
-            //                   ),
-            //                 ),
-            //               ), // Will be change later
-            //             ]),
-            //           ],
-            //         ),
-            //       ],
-            //     );
-            //   }
+                  if (state is CityListLoaded) {
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: state.result.length,
+                      itemBuilder: (context, index) {
+                        final city = state.result[index];
+                        return WeatherListItem(cityName: city.name);
+                      },
+                    );
+                  }
 
-            //   return Container();
-            // }),
-          ],
+                  return Container();
+                }),
+              ),
+            ],
+          ),
         ),
       ),
     );
