@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weather/features/city/presentation/bloc/city_bloc.dart';
+import 'package:weather/features/city/presentation/pages/city_page.dart';
 import 'package:weather/injection_container.dart';
 import 'package:weather/features/weather/presentation/bloc/weather_bloc.dart';
 import 'package:weather/features/weather/presentation/pages/weather_page.dart';
@@ -17,6 +19,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => locator<WeatherBloc>()),
+        BlocProvider(create: (_) => locator<CityBloc>()),
       ],
       child: MaterialApp(
         title: 'Weather',
@@ -24,7 +27,8 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.white54),
           useMaterial3: true,
         ),
-        home: const WeatherPage(),
+        // home: const WeatherPage(),
+        home: const CityPage(),
       ),
     );
   }
