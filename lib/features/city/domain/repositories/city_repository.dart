@@ -9,5 +9,5 @@ abstract class CityRepository {
   // Db methods
   Future<Either<Failure, List<CityEntity>>> getSavedCities();
   Future<Either<Failure, void>> saveCity(CityEntity city);
-  Future<void> removeCityById(int id);
+  Future<Either<Failure, void>> removeCityById(int id);
 }

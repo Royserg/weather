@@ -41,8 +41,14 @@ class CityRepositoryImpl extends CityRepository {
   }
 
   @override
-  Future<void> removeCityById(int id) {
-    return appDatabase.cityDao.deleteCityById(id);
+  Future<Either<Failure, void>> removeCityById(int id) async {
+    try {
+      await appDatabase.cityDao.deleteCityById(id);
+      // ignore: void_checks
+      return const Right(Unit);
+    } catch (err) {
+      return const Left(ServerFailure("Failed to delete city"));
+    }
   }
 
   @override

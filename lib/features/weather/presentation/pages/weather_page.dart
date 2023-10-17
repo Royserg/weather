@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weather/features/city/presentation/bloc/delete_city/bloc.dart';
+import 'package:weather/features/city/presentation/bloc/delete_city/state.dart';
 import 'package:weather/features/city/presentation/bloc/list/bloc.dart';
 import 'package:weather/features/city/presentation/bloc/list/event.dart';
 import 'package:weather/features/city/presentation/bloc/list/state.dart';
@@ -26,12 +28,22 @@ class WeatherPage extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-      body: BlocListener<CitySaveBloc, CitySaveState>(
-        listener: (context, state) {
-          if (state is CitySaveSuccess) {
-            context.read<CityListBloc>().add(const OnCityListGet());
-          }
-        },
+      body: MultiBlocListener(
+        listeners: [
+          BlocListener<CitySaveBloc, CitySaveState>(
+              listener: (context, state) {
+                if (state is CitySaveSuccess) {
+                context.read<CityListBloc>().add(const OnCityListGet());
+              }
+          }),
+          BlocListener<CityDeleteBloc, CityDeleteState>(
+            listener: (context, state) {
+              if (state is CityDeleteSuccess) {
+                context.read<CityListBloc>().add(const OnCityListGet());
+              }
+            },
+          )
+        ],
         child: Padding(
           padding: const EdgeInsets.all(24.0),
           child: Center(

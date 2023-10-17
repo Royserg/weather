@@ -6,7 +6,7 @@ abstract class CityDao {
   @Insert()
   Future<void> insertCity(CityModel city);
 
-  @Query('DELETE * FROM cities where id = :id')
+  @Query('DELETE FROM cities WHERE id = :id')
   Future<void> deleteCityById(int id);
 
   @Query('SELECT * FROM cities')
